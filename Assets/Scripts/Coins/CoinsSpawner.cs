@@ -1,26 +1,40 @@
 using UnityEngine;
+using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class CoinsSpawner : MonoBehaviour
 {
     [SerializeField] private Coin coin;
-    [SerializeField] private CoinDot[] _coinSpawnDots;
+    [SerializeField] public List<CoinDot> CoinSpawnDots { get; private set; }
+
+    [SerializeField] private Scene _scene;
+
+    public delegate void ActionThisCoin(Coin coin);
+    public event ActionThisCoin ÑreatedCoin;
+    private Coin _createdCoin;
+    
 
     void Start()
-    {
-        _coinSpawnDots = GetComponentsInChildren<CoinDot>();
-        SpawnAllCoins();
+    {        
+        CoinSpawnDots = new List<CoinDot>(GetComponentsInChildren<CoinDot>());
+        _scene.CoinsCountIsLow.AddListener(SpawnCoin);
     }
 
-    private void SpawnAllCoins()
+    private void SpawnCoin()
     {
-        for(int i = 0; i < _coinSpawnDots.Length; i++)
-        {
-            SpawnCoin(i);
-        }
+        int currentSpawnDot = Random.Range(0, CoinSpawnDots.Count);
+        CreateCoin(currentSpawnDot);
+        CoinSpawnDots.RemoveAt(currentSpawnDot);
     }
 
-    private void SpawnCoin(int currentSpawnDot)
+    private void CreateCoin(int position)
     {
-        Instantiate(coin, _coinSpawnDots[currentSpawnDot].transform);
+        _createdCoin = Instantiate(coin, CoinSpawnDots[position].transform);
+        _createdCoin.OnPlayerTouch.AddListener(AddPoint);
+        ÑreatedCoin?.Invoke(_createdCoin);
+    }
+    private void AddPoint(CoinDot deletedCoinDot)
+    {
+        CoinSpawnDots.Add(deletedCoinDot);
     }
 }
