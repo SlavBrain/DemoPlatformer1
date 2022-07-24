@@ -9,12 +9,12 @@ public class CoinsSpawner : MonoBehaviour
 
     [SerializeField] private Scene _scene;
 
-    public delegate void ActionThisCoin(Coin coin);
-    public event ActionThisCoin ÑreatedCoin;
+    public delegate void ActionWithCoin(Coin coin);
+    public event ActionWithCoin ÑreatedCoin;
     private Coin _createdCoin;
     
 
-    void Start()
+    void OnEnable()
     {        
         CoinSpawnDots = new List<CoinDot>(GetComponentsInChildren<CoinDot>());
         _scene.CoinsCountIsLow.AddListener(SpawnCoin);
@@ -30,7 +30,7 @@ public class CoinsSpawner : MonoBehaviour
     private void CreateCoin(int position)
     {
         _createdCoin = Instantiate(coin, CoinSpawnDots[position].transform);
-        _createdCoin.OnPlayerTouch.AddListener(AddPoint);
+        _createdCoin.OnPlayerTouch+=AddPoint;
         ÑreatedCoin?.Invoke(_createdCoin);
     }
     private void AddPoint(CoinDot deletedCoinDot)

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5398584105358136292}
   - component: {fileID: 5134530849949348515}
   - component: {fileID: 8454625238998966254}
+  - component: {fileID: -5149250873385600218}
+  - component: {fileID: 6124811325419981260}
   m_Layer: 0
   m_Name: Ghost 1
   m_TagString: Untagged
@@ -102,6 +104,34 @@ MonoBehaviour:
   _travelPoints: []
   _travelPointsCoordinate: []
   _speed: 1
+--- !u!114 &-5149250873385600218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744940470239244919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3114782544a895c42a6c0b307d8bfe4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &6124811325419981260
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4744940470239244919}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.119430065, y: -0.029163241}
+  serializedVersion: 2
+  m_Radius: 0.6008307
 --- !u!1 &8454625238383515168
 GameObject:
   m_ObjectHideFlags: 0

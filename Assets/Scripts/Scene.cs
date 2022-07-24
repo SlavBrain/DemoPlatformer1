@@ -1,33 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
 
 public class Scene : MonoBehaviour
 {
     [SerializeField] private int _maxCoinsInScene=2;
     [SerializeField] private bool _isCreatingAllCoinsOnStart = false;
-    [SerializeField] private CoinsSpawner _coinSpawner;
 
-    private int _currentCoinsInScene = 0;
     public UnityEvent CoinsCountIsLow;
+    private CoinsSpawner _coinSpawner;
+    private int _currentCoinsInScene = 0;    
 
     void Start()
     {
-        _coinSpawner.ÑreatedCoin += AddCurrentCoinsValue;
+        _coinSpawner = GetComponentInChildren<CoinsSpawner>();
 
-        if (_maxCoinsInScene > _coinSpawner.CoinSpawnDots.Count)
-            _maxCoinsInScene = _coinSpawner.CoinSpawnDots.Count;
-
-        if (_isCreatingAllCoinsOnStart) 
+        if (_coinSpawner != null)
         {
-            while (_coinSpawner.CoinSpawnDots.Count != 0)
+            _coinSpawner.ÑreatedCoin += AddCurrentCoinsValue;
+
+            if (_maxCoinsInScene > _coinSpawner.CoinSpawnDots.Count)
+                _maxCoinsInScene = _coinSpawner.CoinSpawnDots.Count;
+
+            if (_isCreatingAllCoinsOnStart)
             {
-                CoinsCountIsLow?.Invoke();
-                Debug.Log("neeeed");
-            }            
+                RequiredMaxCoin();
+            }
         }
+        else
+        {
+            Debug.LogError("Not found CoinSpawn in child");
+        }        
     }
 
     private void Update()
@@ -35,18 +37,25 @@ public class Scene : MonoBehaviour
         if (_currentCoinsInScene < _maxCoinsInScene)
         {
             CoinsCountIsLow?.Invoke();
-            Debug.Log("neeeed");
         }            
     }
 
     private void AddCurrentCoinsValue(Coin currentCoin)
     {
         _currentCoinsInScene++;
-        currentCoin.OnPlayerTouch.AddListener(RemoveCurrentCoinsValue);
+        currentCoin.OnPlayerTouch+=RemoveCurrentCoinsValue;
     }
 
     private void RemoveCurrentCoinsValue(CoinDot coinDot)
     {
         _currentCoinsInScene--;
+    }
+    
+    private void RequiredMaxCoin()
+    {
+        while (_coinSpawner.CoinSpawnDots.Count != 0)
+        {
+            CoinsCountIsLow?.Invoke();
+        }
     }
 }

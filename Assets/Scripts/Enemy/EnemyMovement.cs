@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
-{
-    [SerializeField] private EnemyTravelPoint[] _travelPoints;
+{    
+    [SerializeField] private float _speed=1;
     [SerializeField] private List<Vector2> _travelPointsCoordinate;
-    [SerializeField] private float _speed;
+
+    private EnemyTravelPoint[] _travelPoints;    
 
     private bool _isWatchingRight = false;
+    private bool _isMoving;
     private Coroutine _moving;
 
-    void Awake()
+    void OnEnable()
     {
         _travelPoints = GetComponentsInChildren<EnemyTravelPoint>();
 
         if (_travelPoints == null)
         {
-            Destroy(gameObject);
+            Debug.LogWarning(gameObject.name + ": не заданы координаты пути. Объект будет удален.");
+            Destroy(gameObject);            
         }
         else
         {
@@ -33,27 +36,7 @@ public class EnemyMovement : MonoBehaviour
         {
             _moving = StartCoroutine(MoveToPoint());
         }        
-    }
-
-    private IEnumerator MoveToPoint()
-    {
-        for (int i = 0; i < _travelPointsCoordinate.Count; i++)
-        {
-            if (IsGoRight(_travelPointsCoordinate[i])&&!_isWatchingRight|| !IsGoRight(_travelPointsCoordinate[i]) && _isWatchingRight)
-                TurnAround();
-
-            while ((Vector2)transform.position != _travelPointsCoordinate[i])
-            {
-                this.transform.position = Vector2.MoveTowards(transform.position, _travelPointsCoordinate[i], Time.deltaTime * _speed);
-                yield return null;
-            }
-
-            if (i == _travelPointsCoordinate.Count - 1)
-            {
-                i = -1;
-            }
-        }
-    }
+    }    
 
     private void TurnAround()
     {
@@ -77,5 +60,32 @@ public class EnemyMovement : MonoBehaviour
         }
 
         return isGoRight;
+    }
+
+    private IEnumerator MoveToPoint()
+    {
+        _isMoving = true;
+        int nextPointNumber = 1;
+
+        while(_isMoving)
+        {
+            if (IsGoRight(_travelPointsCoordinate[nextPointNumber]) && !_isWatchingRight || !IsGoRight(_travelPointsCoordinate[nextPointNumber]) && _isWatchingRight)
+                TurnAround();
+
+            while ((Vector2)transform.position != _travelPointsCoordinate[nextPointNumber])
+            {
+                this.transform.position = Vector2.MoveTowards(transform.position, _travelPointsCoordinate[nextPointNumber], Time.deltaTime * _speed);
+                yield return null;
+            }
+
+            if (nextPointNumber == _travelPointsCoordinate.Count - 1)
+            {
+                nextPointNumber = 0;
+            }
+            else
+            {
+                nextPointNumber++;
+            }
+        }
     }
 }

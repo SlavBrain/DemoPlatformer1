@@ -56,6 +56,8 @@ GameObject:
   - component: {fileID: 2310773858938436322}
   - component: {fileID: 5297629060784630039}
   - component: {fileID: 6549091026339511925}
+  - component: {fileID: 8847808049121493886}
+  - component: {fileID: 5052888113255345165}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -71,7 +73,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7855765965439320541}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8750829, y: -0.04225838, z: 0}
+  m_LocalPosition: {x: -1.8750829, y: -0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -167,6 +169,34 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8847808049121493886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7855765965439320541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3114782544a895c42a6c0b307d8bfe4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!70 &5052888113255345165
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7855765965439320541}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 7.209806e-10, y: 0.0060480246}
+  m_Size: {x: 1.8400007, y: 0.97374094}
+  m_Direction: 1
 --- !u!1 &8728406894017341243
 GameObject:
   m_ObjectHideFlags: 0
