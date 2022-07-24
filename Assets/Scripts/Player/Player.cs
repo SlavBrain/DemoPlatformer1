@@ -8,11 +8,8 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _renderer;
-
     [SerializeField] private int _maxHealth;
-
-    [SerializeField] private int _currentHealth;
-    
+    [SerializeField] private int _currentHealth;    
     [SerializeField] private bool _isImmunityTurnOn;
 
     public UnityEvent<Enemy> Hit;
@@ -20,7 +17,6 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
     private int _isHitHash = Animator.StringToHash("isHit");
-
     private Vector2 _startPosition;
     private float _timeOfImmunity=3f;      
     private float _blinkingSpeed=5f;
@@ -29,11 +25,9 @@ public class Player : MonoBehaviour
     private Coroutine _changingAlpha;
     private Coroutine _turningOnImmunity;
 
-
     private void OnEnable()
     {
         _animator = GetComponent<Animator>();
-
         _startPosition = transform.position;
         _currentHealth = _maxHealth;
         _standartColor = _renderer.color;

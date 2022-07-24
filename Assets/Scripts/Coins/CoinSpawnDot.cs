@@ -27,8 +27,7 @@ public class CoinSpawnDot: MonoBehaviour
         {
             DoAvailablwe();
             PlayerWentAway?.Invoke(this);
-        }
-            
+        }            
     }
 
     private void DoAvailablwe()

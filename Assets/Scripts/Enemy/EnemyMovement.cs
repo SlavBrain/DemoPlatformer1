@@ -7,8 +7,8 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {    
     [SerializeField] private float _speed=1;
-    [SerializeField] private List<Vector2> _travelPointsCoordinate;
 
+    private List<Vector2> _travelPointsCoordinate;
     private EnemyTravelPoint[] _travelPoints;
     private SpriteRenderer _spriteRenderer;
 

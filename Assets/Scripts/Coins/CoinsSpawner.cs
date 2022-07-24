@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 public class CoinsSpawner : MonoBehaviour
 {
-    [SerializeField] private Coin coin;
-    [SerializeField] public List<CoinSpawnDot> CoinSpawnDots { get; private set; }
-
+    [SerializeField] private Coin _coin;    
     [SerializeField] private Scene _scene;
 
     public delegate void ActionWithCoin(Coin coin,CoinSpawnDot coinSpawnDot);
     public event ActionWithCoin ÑreatedCoin;
 
     private Coin _createdCoin;
+
+    public List<CoinSpawnDot> CoinSpawnDots { get; private set; }
 
     private void OnEnable()
     {        
@@ -39,9 +39,10 @@ public class CoinsSpawner : MonoBehaviour
 
     private void CreateCoin(int position)
     {
-        _createdCoin = Instantiate(coin, CoinSpawnDots[position].transform);
+        _createdCoin = Instantiate(_coin, CoinSpawnDots[position].transform);
         ÑreatedCoin?.Invoke(_createdCoin,CoinSpawnDots[position]);               
     }
+
     private void AddPoint(CoinSpawnDot deletedCoinDot)
     {
         CoinSpawnDots.Add(deletedCoinDot);

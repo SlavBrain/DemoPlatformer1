@@ -11,28 +11,19 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _maxSpeed=2;
     [SerializeField] private float _jumpPower=8;
-    [SerializeField] float _powerMultiplyerToBounceBack = 5;
-
-    [SerializeField] bool _isStayOnGround = true;
-
-
-
+    [SerializeField] float _powerMultiplyerToBounceBack = 5;    
     private Player _player;
     private Animator _animator;
     private Rigidbody2D _rigidbody2d;
     private SpriteRenderer _spriteRenderer;
-
     private int speedHash = Animator.StringToHash("Speed");
     private int isJumpHash = Animator.StringToHash("isJump");
-
     private Vector2 _bounceDirection;    
-
     private bool _isWatchingRight = true;
-
     private Coroutine _lockingController;
     private float _lockingControllerTime=1f;
     private bool _isLockController;
-
+    private bool _isStayOnGround = true;
 
     private void OnEnable()
     {
