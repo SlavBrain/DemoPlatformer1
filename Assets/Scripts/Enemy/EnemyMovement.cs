@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+
 public class EnemyMovement : MonoBehaviour
 {    
     [SerializeField] private float _speed=1;
     [SerializeField] private List<Vector2> _travelPointsCoordinate;
 
-    private EnemyTravelPoint[] _travelPoints;    
+    private EnemyTravelPoint[] _travelPoints;
+    private SpriteRenderer _spriteRenderer;
 
     private bool _isWatchingRight = false;
     private bool _isMoving;
     private Coroutine _moving;
 
-    void OnEnable()
+    private void OnEnable()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _travelPoints = GetComponentsInChildren<EnemyTravelPoint>();
 
         if (_travelPoints == null)
@@ -41,25 +45,12 @@ public class EnemyMovement : MonoBehaviour
     private void TurnAround()
     {
         _isWatchingRight = !_isWatchingRight;
-        Vector3 Scale = transform.localScale;
-        Scale.x *= -1;
-        transform.localScale = Scale;
+        _spriteRenderer.flipX = !_spriteRenderer.flipX;
     }
 
     private bool IsGoRight(Vector2 nextPoint)
     {
-        bool isGoRight;
-
-        if (transform.position.x <= nextPoint.x)
-        {
-            isGoRight = true;
-        }
-        else
-        {
-            isGoRight = false;
-        }
-
-        return isGoRight;
+        return transform.position.x <= nextPoint.x;
     }
 
     private IEnumerator MoveToPoint()
@@ -67,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
         _isMoving = true;
         int nextPointNumber = 1;
 
-        while(_isMoving)
+        while (_isMoving)
         {
             if (IsGoRight(_travelPointsCoordinate[nextPointNumber]) && !_isWatchingRight || !IsGoRight(_travelPointsCoordinate[nextPointNumber]) && _isWatchingRight)
                 TurnAround();

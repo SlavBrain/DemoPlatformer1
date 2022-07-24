@@ -5,19 +5,29 @@ using System.Collections.Generic;
 public class CoinsSpawner : MonoBehaviour
 {
     [SerializeField] private Coin coin;
-    [SerializeField] public List<CoinDot> CoinSpawnDots { get; private set; }
+    [SerializeField] public List<CoinSpawnDot> CoinSpawnDots { get; private set; }
 
     [SerializeField] private Scene _scene;
 
-    public delegate void ActionWithCoin(Coin coin);
+    public delegate void ActionWithCoin(Coin coin,CoinSpawnDot coinSpawnDot);
     public event ActionWithCoin ÑreatedCoin;
-    private Coin _createdCoin;
-    
 
-    void OnEnable()
+    private Coin _createdCoin;
+
+    private void OnEnable()
     {        
-        CoinSpawnDots = new List<CoinDot>(GetComponentsInChildren<CoinDot>());
-        _scene.CoinsCountIsLow.AddListener(SpawnCoin);
+        CoinSpawnDots = new List<CoinSpawnDot>(GetComponentsInChildren<CoinSpawnDot>());
+        _scene.CoinsCountIsLow+=SpawnCoin;
+
+        foreach(CoinSpawnDot dot in CoinSpawnDots)
+        {
+            dot.PlayerWentAway += AddPoint;
+        }
+    }
+
+    private void OnDisable()
+    {
+        ÑreatedCoin = null;
     }
 
     private void SpawnCoin()
@@ -30,10 +40,9 @@ public class CoinsSpawner : MonoBehaviour
     private void CreateCoin(int position)
     {
         _createdCoin = Instantiate(coin, CoinSpawnDots[position].transform);
-        _createdCoin.OnPlayerTouch+=AddPoint;
-        ÑreatedCoin?.Invoke(_createdCoin);
+        ÑreatedCoin?.Invoke(_createdCoin,CoinSpawnDots[position]);               
     }
-    private void AddPoint(CoinDot deletedCoinDot)
+    private void AddPoint(CoinSpawnDot deletedCoinDot)
     {
         CoinSpawnDots.Add(deletedCoinDot);
     }

@@ -7,21 +7,19 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private CoinsSpawner _coinsSpawner;
     [SerializeField] private SpriteRenderer _renderer;
 
     [SerializeField] private int _maxHealth;
 
-    [SerializeField] private int _score;
     [SerializeField] private int _currentHealth;
     
     [SerializeField] private bool _isImmunityTurnOn;
 
-    public delegate void ActionWithEnemy(Enemy enemy);
-    public ActionWithEnemy Hit;
+    public UnityEvent<Enemy> Hit;
+    public UnityEvent Dead;
 
     private Animator _animator;
-    private int isHitHash = Animator.StringToHash("isHit");
+    private int _isHitHash = Animator.StringToHash("isHit");
 
     private Vector2 _startPosition;
     private float _timeOfImmunity=3f;      
@@ -30,13 +28,11 @@ public class Player : MonoBehaviour
     private Coroutine _goBlinking;
     private Coroutine _changingAlpha;
     private Coroutine _turningOnImmunity;
-    
+
 
     private void OnEnable()
     {
         _animator = GetComponent<Animator>();
-        
-        _coinsSpawner.ÑreatedCoin += SubscribeToCoin;
 
         _startPosition = transform.position;
         _currentHealth = _maxHealth;
@@ -55,16 +51,6 @@ public class Player : MonoBehaviour
             Die();
         }
     }
-
-    private void TakeCoin(CoinDot TouchedDot)
-    {
-        _score++;
-    }
-
-    private void SubscribeToCoin(Coin currentCoin)
-    {
-        currentCoin.OnPlayerTouch+=TakeCoin;
-    }
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -74,7 +60,7 @@ public class Player : MonoBehaviour
             {                
                 _currentHealth--;
                 Hit?.Invoke(enemy);
-                _animator.SetTrigger(isHitHash);
+                _animator.SetTrigger(_isHitHash);
 
                 if (_turningOnImmunity != null)
                 {
@@ -90,7 +76,7 @@ public class Player : MonoBehaviour
     {
         transform.position = _startPosition;
         _currentHealth = _maxHealth;
-        _score = 0;
+        Dead?.Invoke();
     }
 
     private void ReturnStandartColor()

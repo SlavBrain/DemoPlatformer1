@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private Player _player;
     private Animator _animator;
     private Rigidbody2D _rigidbody2d;
+    private SpriteRenderer _spriteRenderer;
 
     private int speedHash = Animator.StringToHash("Speed");
     private int isJumpHash = Animator.StringToHash("isJump");
@@ -32,15 +34,16 @@ public class PlayerMovement : MonoBehaviour
     private bool _isLockController;
 
 
-    void OnEnable()
+    private void OnEnable()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _player = GetComponent<Player>();
-        _player.Hit+=BounceBack;        
+        _player.Hit.AddListener(BounceBack);        
     }
     
-    void Update()
+    private void Update()
     {        
         _animator.SetFloat(speedHash, Mathf.Abs(_rigidbody2d.velocity.x));
         _animator.SetBool(isJumpHash, !_isStayOnGround);
@@ -83,9 +86,10 @@ public class PlayerMovement : MonoBehaviour
     private void TurnAround()
     {
         _isWatchingRight = !_isWatchingRight;
-        Vector2 Scale = transform.localScale;
-        Scale.x *= -1;
-        transform.localScale = Scale;
+        _spriteRenderer.flipX = !_spriteRenderer.flipX;
+        //Vector2 Scale = transform.localScale;
+        //Scale.x *= -1;
+        //transform.localScale = Scale;
     }    
 
     private void BounceBack(Enemy enemy)

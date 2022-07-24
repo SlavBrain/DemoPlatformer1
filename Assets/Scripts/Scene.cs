@@ -6,17 +6,19 @@ public class Scene : MonoBehaviour
     [SerializeField] private int _maxCoinsInScene=2;
     [SerializeField] private bool _isCreatingAllCoinsOnStart = false;
 
-    public UnityEvent CoinsCountIsLow;
+    public delegate void ActionWithCoins();
+    public event ActionWithCoins CoinsCountIsLow;
     private CoinsSpawner _coinSpawner;
+
     private int _currentCoinsInScene = 0;    
 
-    void Start()
+    private void Start()
     {
         _coinSpawner = GetComponentInChildren<CoinsSpawner>();
 
         if (_coinSpawner != null)
         {
-            _coinSpawner.ÑreatedCoin += AddCurrentCoinsValue;
+            _coinSpawner.ÑreatedCoin+=AddCurrentCoinsValue;
 
             if (_maxCoinsInScene > _coinSpawner.CoinSpawnDots.Count)
                 _maxCoinsInScene = _coinSpawner.CoinSpawnDots.Count;
@@ -32,23 +34,20 @@ public class Scene : MonoBehaviour
         }        
     }
 
-    private void Update()
+    private void AddCurrentCoinsValue(Coin currentCoin,CoinSpawnDot coinSpawnDot)
     {
+        _currentCoinsInScene++;
+        currentCoin.OnPlayerTouched+=RemoveCurrentCoinsValue;
+    }
+
+    private void RemoveCurrentCoinsValue(CoinSpawnDot coinDot)
+    {
+        _currentCoinsInScene--;
+
         if (_currentCoinsInScene < _maxCoinsInScene)
         {
             CoinsCountIsLow?.Invoke();
-        }            
-    }
-
-    private void AddCurrentCoinsValue(Coin currentCoin)
-    {
-        _currentCoinsInScene++;
-        currentCoin.OnPlayerTouch+=RemoveCurrentCoinsValue;
-    }
-
-    private void RemoveCurrentCoinsValue(CoinDot coinDot)
-    {
-        _currentCoinsInScene--;
+        }
     }
     
     private void RequiredMaxCoin()

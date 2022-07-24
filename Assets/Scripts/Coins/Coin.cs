@@ -3,15 +3,23 @@ using UnityEngine.Events;
 
 public class Coin : MonoBehaviour
 {
-    public delegate void ActionWithCoinDot(CoinDot coinDot);
-    public ActionWithCoinDot OnPlayerTouch;
+    public delegate void ActionWithCoinSpawnDot(CoinSpawnDot coinSpawnDot);
+    [SerializeField]public event ActionWithCoinSpawnDot OnPlayerTouched;
 
+    private void OnEnable()
+    {
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.TryGetComponent<Player>(out Player player))
         {
-            OnPlayerTouch.Invoke(this.GetComponentInParent<CoinDot>());
+            OnPlayerTouched?.Invoke(GetComponentInParent<CoinSpawnDot>());            
             Destroy(gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        OnPlayerTouched = null;
     }
 }
