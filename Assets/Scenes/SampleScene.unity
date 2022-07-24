@@ -1172,10 +1172,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxCoinsInScene: 2
   _isCreatingAllCoinsOnStart: 1
-  CoinsCountIsLow:
-    m_PersistentCalls:
-      m_Calls: []
-  _currentCoinsInScene: 0
 --- !u!1 &1060007508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4744940470239244919, guid: bb30dc93b99a85945a07c1a8ce51a713, type: 3}
@@ -1620,7 +1616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa5f22d306130f41819acaef2db3b62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coin: {fileID: 1921722696780842480, guid: a3bf244a3f09aad468b1fa02bd6d910f, type: 3}
+  _coin: {fileID: 0}
   _scene: {fileID: 706273085}
 --- !u!1 &1671395264
 GameObject:
@@ -8408,6 +8404,7 @@ GameObject:
   - component: {fileID: 1931853773}
   - component: {fileID: 1931853776}
   - component: {fileID: 1931853775}
+  - component: {fileID: 1931853777}
   m_Layer: 0
   m_Name: coinDot3
   m_TagString: Untagged
@@ -8514,6 +8511,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1931853777
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931853771}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1955701550
 GameObject:
   m_ObjectHideFlags: 0
@@ -8526,6 +8539,7 @@ GameObject:
   - component: {fileID: 1955701552}
   - component: {fileID: 1955701555}
   - component: {fileID: 1955701554}
+  - component: {fileID: 1955701556}
   m_Layer: 0
   m_Name: coinDot2
   m_TagString: Untagged
@@ -8632,6 +8646,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1955701556
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955701550}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1966540242
 GameObject:
   m_ObjectHideFlags: 0
@@ -8644,6 +8674,7 @@ GameObject:
   - component: {fileID: 1966540244}
   - component: {fileID: 1966540247}
   - component: {fileID: 1966540246}
+  - component: {fileID: 1966540248}
   m_Layer: 0
   m_Name: coinDot1
   m_TagString: Untagged
@@ -8750,6 +8781,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1966540248
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966540242}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &2006950039
 GameObject:
   m_ObjectHideFlags: 0
@@ -8789,7 +8836,6 @@ MonoBehaviour:
   _maxSpeed: 2
   _jumpPower: 8
   _powerMultiplyerToBounceBack: 5
-  _isStayOnGround: 1
 --- !u!50 &2006950041
 Rigidbody2D:
   serializedVersion: 4
