@@ -8,7 +8,7 @@ public class CoinsSpawner : MonoBehaviour
     [SerializeField] private Scene _scene;
 
     public delegate void ActionWithCoin(Coin coin,CoinSpawnDot coinSpawnDot);
-    public event ActionWithCoin ÑreatedCoin;
+    public event ActionWithCoin CreatedCoin;
 
     private Coin _createdCoin;
 
@@ -27,7 +27,7 @@ public class CoinsSpawner : MonoBehaviour
 
     private void OnDisable()
     {
-        ÑreatedCoin = null;
+        CreatedCoin = null;
     }
 
     private void SpawnCoin()
@@ -40,7 +40,7 @@ public class CoinsSpawner : MonoBehaviour
     private void CreateCoin(int position)
     {
         _createdCoin = Instantiate(_coin, CoinSpawnDots[position].transform);
-        ÑreatedCoin?.Invoke(_createdCoin,CoinSpawnDots[position]);               
+        CreatedCoin?.Invoke(_createdCoin,CoinSpawnDots[position]);               
     }
 
     private void AddPoint(CoinSpawnDot deletedCoinDot)
